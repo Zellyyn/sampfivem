@@ -1,0 +1,1 @@
+#define 	SERVER_VERSION       "TP: 0.01a"
