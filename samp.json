@@ -1,0 +1,9 @@
+{
+	"gamemodes": [
+		"modular"
+	],
+	"rcon_password": "`:MiSq763+$\"",
+	"port": 7777,
+	"hostname": "FiveM",
+	"maxplayers": 32
+}
