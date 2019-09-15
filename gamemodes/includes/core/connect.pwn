@@ -20,6 +20,7 @@ public LoadPlayer(playerid)
 	cache_get_value_name_int(0, "Kills", PlayerInfo[playerid][Kills]);
 	cache_get_value_name_int(0, "Deaths", PlayerInfo[playerid][Deaths]);
 	GivePlayerMoney(playerid, PlayerInfo[playerid][Cash]);
+	SendClientMessage(playerid, COLOR_RED, "LoadPlayer loaded...");
 	return 1;
 }
 
@@ -59,7 +60,7 @@ Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[])
 	{ // If it matches
 		mysql_format(gSQL, query, sizeof(query), "SELECT * FROM `users` WHERE `Username` = '%e' LIMIT 0, 1", PlayerName[playerid]);
 		mysql_tquery(gSQL, query, "LoadPlayer", "i", playerid); //Let's call LoadPlayer.
-		SendClientMessage(playerid, COLOR_RED, "คุณเข้าสู่เกมสำเร็จ!");
+		SendClientMessage(playerid, COLOR_RED, "LoadPlayer calling...");
 	}
 	else // If the password doesn't match.
 	{
