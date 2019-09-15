@@ -1,0 +1,23 @@
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[18:10:02] plugins = ""  (string)
+[18:10:02] 
+[18:10:02] Server Plugins
+[18:10:02] --------------
+[18:10:02]  Loaded 0 plugins.
+
+[18:10:02] 
+[18:10:02] Filterscripts
+[18:10:02] ---------------
+[18:10:02]   Loaded 0 filterscripts.
+
+[18:10:02] Script[gamemodes/modular.amx]: Run time error 19: "File or function is not found"
+[18:10:02] Number of vehicle models: 0
+[18:10:10] --- Server Shutting Down.
