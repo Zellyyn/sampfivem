@@ -1,3 +1,10 @@
+#define 	MYSQL_HOSTNAME		"localhost"
+#define 	MYSQL_USERNAME		"root"
+#define 	MYSQL_PASSWORD		"11211121"
+#define 	MYSQL_DATABASE		"tenka"
+
+#define 	SERVER_VERSION       "TP: 0.01a"
+
 #define 	COLOR_GREY 			 0xAFAFAFAA
 #define 	COLOR_GREEN 		 0x33AA33AA
 #define 	COLOR_RED 			 0xAA3333AA

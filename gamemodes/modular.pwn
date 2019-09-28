@@ -5,9 +5,7 @@
 native WP_Hash(buffer[], len, const str[]);
 
 // defines
-#include "includes/defines/connection.pwn"
-#include "includes/defines/color.pwn"
-#include "includes/defines/version.pwn"
+#include "includes/defines.pwn"
 
 // includes
 #include "includes/enums.pwn"

@@ -1,8 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
-forward LoadPlayer(playerid);
-forward CheckPlayer(playerid);
-forward RegisterPlayer(playerid);
+forward OnPlayerDataLoad(playerid);
+forward OnPlayerDataCheck(playerid);
+forward OnPlayerRegister(playerid);
 
 hook OnPlayerConnect(playerid)
 {
@@ -10,21 +10,20 @@ hook OnPlayerConnect(playerid)
 	GetPlayerName(playerid, PlayerName[playerid], 30); // This will get the player's name
 	GetPlayerIp(playerid, PlayerIP[playerid], 16); // This will get the player's IP Address
 	mysql_format(gSQL, query, sizeof(query), "SELECT `Password`, `ID` FROM `users` WHERE `Username` = '%e' LIMIT 1", PlayerName[playerid]); // We are selecting the password and the ID from the player's name
-	mysql_tquery(gSQL, query, "CheckPlayer", "i", playerid);
+	mysql_tquery(gSQL, query, "OnPlayerDataCheck", "i", playerid);
 	return 1;
 }
 
-public LoadPlayer(playerid)
+public OnPlayerDataLoad(playerid)
 {
 	cache_get_value_name_int(0, "Cash", PlayerInfo[playerid][Cash]);
 	cache_get_value_name_int(0, "Kills", PlayerInfo[playerid][Kills]);
 	cache_get_value_name_int(0, "Deaths", PlayerInfo[playerid][Deaths]);
 	GivePlayerMoney(playerid, PlayerInfo[playerid][Cash]);
-	SendClientMessage(playerid, COLOR_RED, "LoadPlayer loaded...");
 	return 1;
 }
 
-public CheckPlayer(playerid)
+public OnPlayerDataCheck(playerid)
 {
 	new rows, string[150];
 	cache_get_row_count(rows);
@@ -43,7 +42,7 @@ public CheckPlayer(playerid)
 	return 1;
 }
 
-public RegisterPlayer(playerid)
+public OnPlayerRegister(playerid)
 {
 	PlayerInfo[playerid][ID] = cache_insert_id();
 	printf("A new account with the id of %d has been registered!", PlayerInfo[playerid][ID]); // You can remove this if you want, I just used it to debug.
@@ -59,8 +58,7 @@ Dialog:DIALOG_LOGIN(playerid, response, listitem, inputtext[])
 	if(!strcmp(password, PlayerInfo[playerid][Password])) // This will check if the password we used to register with matches
 	{ // If it matches
 		mysql_format(gSQL, query, sizeof(query), "SELECT * FROM `users` WHERE `Username` = '%e' LIMIT 0, 1", PlayerName[playerid]);
-		mysql_tquery(gSQL, query, "LoadPlayer", "i", playerid); //Let's call LoadPlayer.
-		SendClientMessage(playerid, COLOR_RED, "LoadPlayer calling...");
+		mysql_tquery(gSQL, query, "OnPlayerDataLoad", "i", playerid); //Let's call LoadPlayer.
 	}
 	else // If the password doesn't match.
 	{
@@ -80,7 +78,7 @@ Dialog:DIALOG_REGISTER(playerid, response, listitem, inputtext[])
 	WP_Hash(PlayerInfo[playerid][Password], 129, inputtext); // Hash the password the player has wrote to the register dialog using Whirlpool.
 	mysql_format(gSQL, query, sizeof(query), "INSERT INTO `users` (`Username`, `Password`, `IP`, `Cash`, `Kills`, `Deaths`) VALUES ('%e', '%e', '%e', 0, 0, 0)", PlayerName[playerid], PlayerInfo[playerid][Password], PlayerIP[playerid]);
 	// Insert player's information into the MySQL database so we can load it later.
-	mysql_pquery(gSQL, query, "RegisterPlayer", "i", playerid); // We'll call this as soon as the player successfully registers.
+	mysql_pquery(gSQL, query, "OnPlayerRegister", "i", playerid); // We'll call this as soon as the player successfully registers.
 
 	format(query, sizeof(query), "Welcome back to the server.\nPlease type your password below to login to your account."); // A dialog will pop up telling the player to write they password below to login.
 	Dialog_Show(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, "Login", query, "Login", "Exit");
